@@ -1,8 +1,8 @@
 ---
 id: DM-MEASUREMENT-WINDOW
 title: Measurement Window Data Contract
-version: 1.0.0
-status: DRAFT
+version: 1.0.1
+status: DRAFT_FOR_RE_REVIEW
 owner: Data Architecture
 type: entity
 normative: true
@@ -134,3 +134,5 @@ implemented_by:
 | Version | Date | Change |
 |---|---|---|
 | 1.0.0 | 2026-08-06 | Initial MeasurementWindow contract. |
+
+| 1.0.1 | 2026-08-06 | M3.1 consistency and executable-test patch. |

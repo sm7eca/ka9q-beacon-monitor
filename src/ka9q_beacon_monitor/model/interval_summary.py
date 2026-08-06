@@ -1,22 +1,22 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import datetime, timedelta, timezone
+from datetime import datetime
 from enum import StrEnum
 from statistics import median
 import math
 from typing import Iterable
 
-from .observation import DetectionState, MeasurementQuality, Observation
+from .observation import DetectionState, Observation, QualityLevel
 
 
 class SummaryState(StrEnum):
-    NO_DATA = "NO_DATA"
-    NOT_HEARD = "NOT_HEARD"
-    WEAK = "WEAK"
-    AUDIBLE = "AUDIBLE"
-    STRONG = "STRONG"
-    INTERFERED = "INTERFERED"
+    NO_DATA = "no_data"
+    NOT_HEARD = "not_heard"
+    WEAK = "weak"
+    AUDIBLE = "audible"
+    STRONG = "strong"
+    INTERFERED = "interfered"
 
 
 @dataclass(frozen=True, slots=True)
@@ -35,13 +35,17 @@ class IntervalSummary:
     maximum_classification_snr_db: float | None
     median_frequency_offset_hz: float | None
     final_state: SummaryState
-    quality: MeasurementQuality
+    quality: QualityLevel
 
     def __post_init__(self) -> None:
         if not self.beacon_id.strip():
             raise ValueError("beacon_id must not be empty")
-        if self.interval_start_utc.tzinfo is None or self.interval_end_utc.tzinfo is None:
+        if self.interval_start_utc.tzinfo is None or self.interval_start_utc.utcoffset() is None:
             raise ValueError("interval timestamps must be timezone-aware")
+        if self.interval_end_utc.tzinfo is None or self.interval_end_utc.utcoffset() is None:
+            raise ValueError("interval timestamps must be timezone-aware")
+        if self.interval_start_utc.utcoffset().total_seconds() != 0 or self.interval_end_utc.utcoffset().total_seconds() != 0:
+            raise ValueError("interval timestamps must be expressed in UTC")
         if self.interval_end_utc <= self.interval_start_utc:
             raise ValueError("interval_end_utc must be after interval_start_utc")
         if self.expected_observation_count <= 0:
@@ -64,7 +68,11 @@ class IntervalSummary:
             value = getattr(self, name)
             if not math.isfinite(value) or not 0.0 <= value <= 100.0:
                 raise ValueError(f"{name} must be between 0 and 100")
-        for name in ("median_classification_snr_db", "maximum_classification_snr_db", "median_frequency_offset_hz"):
+        for name in (
+            "median_classification_snr_db",
+            "maximum_classification_snr_db",
+            "median_frequency_offset_hz",
+        ):
             value = getattr(self, name)
             if value is not None and not math.isfinite(value):
                 raise ValueError(f"{name} must be finite when present")
@@ -83,8 +91,6 @@ class IntervalSummary:
         audible_threshold_db: float = 6.0,
         strong_threshold_db: float = 15.0,
     ) -> "IntervalSummary":
-        if interval_start_utc.tzinfo is None or interval_end_utc.tzinfo is None:
-            raise ValueError("interval timestamps must be timezone-aware")
         duration_seconds = (interval_end_utc - interval_start_utc).total_seconds()
         if duration_seconds <= 0:
             raise ValueError("interval_end_utc must be after interval_start_utc")
@@ -96,26 +102,25 @@ class IntervalSummary:
 
         selected = sorted(
             [
-                observation
-                for observation in observations
-                if observation.beacon_id == beacon_id
-                and interval_start_utc <= observation.window_start_utc < interval_end_utc
+                item
+                for item in observations
+                if item.beacon_id == beacon_id
+                and interval_start_utc <= item.window_start_utc < interval_end_utc
             ],
             key=lambda item: item.window_start_utc,
         )
-        valid = [item for item in selected if item.detection_state != DetectionState.NO_DATA]
-        verified = [item for item in valid if item.detection_state == DetectionState.VERIFIED_BEACON]
+        valid = [item for item in selected if item.detection_state is not DetectionState.NO_DATA]
+        verified = [item for item in valid if item.detection_state is DetectionState.VERIFIED_BEACON]
         audible_states = {
             DetectionState.SIGNAL_PRESENT,
             DetectionState.PROBABLE_BEACON,
             DetectionState.VERIFIED_BEACON,
         }
         audible = [item for item in valid if item.detection_state in audible_states]
-        interfered = [item for item in valid if item.detection_state == DetectionState.INTERFERENCE]
+        interfered = [item for item in valid if item.detection_state is DetectionState.INTERFERENCE]
 
         snrs = [item.classification_snr_db for item in valid if item.classification_snr_db is not None]
         offsets = [item.frequency_offset_hz for item in valid if item.frequency_offset_hz is not None]
-
         coverage = min(100.0, 100.0 * len(valid) / expected)
         audible_percent = 0.0 if not valid else 100.0 * len(audible) / len(valid)
         median_snr = median(snrs) if snrs else None
@@ -139,7 +144,6 @@ class IntervalSummary:
             valid_count=len(valid),
             minimum_valid_coverage_percent=minimum_valid_coverage_percent,
         )
-
         return cls(
             beacon_id=beacon_id,
             interval_start_utc=interval_start_utc,
@@ -171,6 +175,7 @@ def _classify_summary(
     audible_threshold_db: float,
     strong_threshold_db: float,
 ) -> SummaryState:
+    # Normative order: first matching rule wins.
     if coverage < minimum_valid_coverage_percent or valid_count == 0:
         return SummaryState.NO_DATA
     if interference_count / valid_count > 0.5:
@@ -190,11 +195,11 @@ def _classify_quality(
     verified_count: int,
     valid_count: int,
     minimum_valid_coverage_percent: float,
-) -> MeasurementQuality:
+) -> QualityLevel:
     if coverage < minimum_valid_coverage_percent or valid_count == 0:
-        return MeasurementQuality.INVALID
+        return QualityLevel.INVALID
     if verified_count > 0 and coverage >= 80.0:
-        return MeasurementQuality.VERIFIED
+        return QualityLevel.HIGH
     if coverage >= 80.0:
-        return MeasurementQuality.VALID
-    return MeasurementQuality.DEGRADED
+        return QualityLevel.NOMINAL
+    return QualityLevel.DEGRADED

@@ -21,7 +21,8 @@ def sample(ts: datetime, channel_id: str = "beacon-1", power: float = -70.0) -> 
         gain_db=10.0,
         output_level_db=-20.0,
         headroom_db=12.0,
-        pll_lock=None,
+        pll_locked=None,
+        sequence_number=None,
         demod_mode=DemodMode.LINEAR,
         sample_quality=SampleQuality.VALID,
     )

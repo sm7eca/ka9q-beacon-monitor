@@ -1,8 +1,8 @@
 ---
 id: DM-STATUS-SAMPLE
 title: Status Sample Data Contract
-version: 1.0.0
-status: DRAFT
+version: 1.0.1
+status: DRAFT_FOR_RE_REVIEW
 owner: Data Architecture
 type: entity
 normative: true
@@ -160,3 +160,5 @@ verified_by:
 | Version | Date | Change |
 |---|---|---|
 | 1.0.0 | 2026-08-06 | Initial M3 `StatusSample` contract. |
+
+| 1.0.1 | 2026-08-06 | M3.1 consistency and executable-test patch. |

@@ -1,8 +1,8 @@
 ---
 id: DM-INTERVAL-SUMMARY
 title: Interval Summary Data Contract
-version: 1.0.0
-status: DRAFT
+version: 1.0.1
+status: DRAFT_FOR_RE_REVIEW
 type: entity
 normative: true
 depends_on:
@@ -55,6 +55,7 @@ This contract owns interval membership, coverage, aggregate signal statistics, s
 - DM-INTERVAL-SUMMARY-010: `WEAK` SHALL require at least 10 percent audible and median classification SNR at or above 3 dB by default.
 - DM-INTERVAL-SUMMARY-011: Thresholds SHALL be configurable by the aggregation component without changing this entity schema.
 - DM-INTERVAL-SUMMARY-012: The entity SHALL be immutable after construction.
+- DM-INTERVAL-SUMMARY-013: Rules DM-INTERVAL-SUMMARY-006 through -010 SHALL be evaluated in listed order; the first matching rule wins.
 
 # Interfaces
 
@@ -75,14 +76,14 @@ fields:
   maximum_classification_snr_db: float|null
   median_frequency_offset_hz: float|null
   final_state: SummaryState
-  quality: MeasurementQuality
+  quality: QualityLevel
 summary_states:
-  - NO_DATA
-  - NOT_HEARD
-  - WEAK
-  - AUDIBLE
-  - STRONG
-  - INTERFERED
+  - no_data
+  - not_heard
+  - weak
+  - audible
+  - strong
+  - interfered
 ```
 
 # Constraints
@@ -111,8 +112,7 @@ governs:
   - MOD-AGGREGATOR
   - DM-DATABASE
 verified_by:
-  - TEST-UNIT
-  - TEST-INTEGRATION
+  - TEST-DM-INTERVAL-SUMMARY
 ```
 
 # Review Questions
@@ -127,3 +127,5 @@ verified_by:
 | Version | Date | Change |
 |---|---|---|
 | 1.0.0 | 2026-08-06 | Initial IntervalSummary contract. |
+
+| 1.0.1 | 2026-08-06 | M3.1 consistency and executable-test patch. |
