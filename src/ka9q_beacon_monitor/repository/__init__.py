@@ -1,3 +1,3 @@
-from .schema import SCHEMA_VERSION, apply_schema, list_tables, validate_schema
+from .sqlite_repository import RepositoryError, SCHEMA_VERSION, SQLiteRepository
 
-__all__ = ["SCHEMA_VERSION", "apply_schema", "list_tables", "validate_schema"]
+__all__ = ["RepositoryError", "SCHEMA_VERSION", "SQLiteRepository"]

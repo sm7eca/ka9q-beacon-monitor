@@ -1,0 +1,280 @@
+{
+  "schema_version": "2.2",
+  "milestones": {
+    "M3": {
+      "id": "M3",
+      "description": "Approved domain model and persistence contracts",
+      "required": [
+        "akb/data",
+        "src/ka9q_beacon_monitor/model",
+        "src/ka9q_beacon_monitor/repository/schema.py",
+        "tests/model",
+        "tests/repository",
+        "reviews/M3/REVIEW_REQUEST.md",
+        "pyproject.toml"
+      ],
+      "optional": [
+        "reviews/M3/REVIEW_RESPONSE*.md",
+        "reviews/M3/FINDING_DISPOSITION*.md",
+        "CHANGELOG*.md",
+        "README*.md"
+      ]
+    },
+    "M4.1": {
+      "id": "M4.1",
+      "description": "KA9Q status receiver module with all required domain dependencies",
+      "required": [
+        "akb/modules/MOD-STATUS-RECEIVER.md",
+        "akb/data/DM-STATUS-SAMPLE.md",
+        "akb/architecture/ARCH-KA9Q.md",
+        "akb/architecture/ARCH-EVENTS.md",
+        "src/ka9q_beacon_monitor/ka9q",
+        "src/ka9q_beacon_monitor/model/status_sample.py",
+        "src/ka9q_beacon_monitor/model/__init__.py",
+        "tests/ka9q",
+        "tests/model/test_status_sample.py",
+        "reviews/M4/M4_1_REVIEW_REQUEST.md",
+        "pyproject.toml"
+      ],
+      "optional": [
+        "reviews/M4/M4_1_REVIEW_RESPONSE*.md",
+        "README_M4_1.md",
+        "CHANGELOG_M4_1*.md",
+        "TEST_RESULTS_M4_1.txt"
+      ]
+    },
+    "M4.2": {
+      "id": "M4.2",
+      "description": "Measurement Builder plus Status Receiver and complete M3 dependency set",
+      "required": [
+        "akb/modules/MOD-STATUS-RECEIVER.md",
+        "akb/modules/MOD-MEASUREMENT-BUILDER.md",
+        "akb/data",
+        "akb/architecture/ARCH-KA9Q.md",
+        "akb/architecture/ARCH-EVENTS.md",
+        "akb/architecture/ARCH-RUNTIME.md",
+        "src/ka9q_beacon_monitor/model",
+        "src/ka9q_beacon_monitor/repository",
+        "src/ka9q_beacon_monitor/ka9q",
+        "src/ka9q_beacon_monitor/processing",
+        "tests/model",
+        "tests/repository",
+        "tests/ka9q",
+        "tests/processing",
+        "reviews/M4/M4_1_REVIEW_REQUEST.md",
+        "reviews/M4/M4_2_REVIEW_REQUEST.md",
+        "pyproject.toml"
+      ],
+      "optional": [
+        "reviews/M4/M4_1_REVIEW_RESPONSE*.md",
+        "reviews/M4/M4_2_REVIEW_RESPONSE*.md",
+        "README_M4_*.md",
+        "CHANGELOG_M4_*.md",
+        "TEST_RESULTS_M4_*.txt"
+      ]
+    },
+    "M4": {
+      "id": "M4",
+      "description": "Aggregate Core Runtime package including every implemented M4 module and all transitive M3 dependencies",
+      "required": [
+        "akb/modules",
+        "akb/data",
+        "akb/architecture",
+        "src/ka9q_beacon_monitor/model",
+        "src/ka9q_beacon_monitor/repository",
+        "src/ka9q_beacon_monitor/ka9q",
+        "src/ka9q_beacon_monitor/processing",
+        "tests/model",
+        "tests/repository",
+        "tests/ka9q",
+        "tests/processing",
+        "reviews/M4",
+        "pyproject.toml"
+      ],
+      "optional": [
+        "akb/context",
+        "src/ka9q_beacon_monitor/__init__.py",
+        "reviews/M3/REVIEW_REQUEST.md",
+        "reviews/M3/REVIEW_RESPONSE*.md",
+        "CHANGELOG*.md",
+        "README*.md",
+        "TEST_RESULTS*.txt"
+      ]
+    },
+    "M4.3": {
+      "id": "M4.3",
+      "description": "Beacon Classifier with approved M3 domain dependencies and prior M4 pipeline modules",
+      "required": [
+        "akb/modules/MOD-STATUS-RECEIVER.md",
+        "akb/modules/MOD-MEASUREMENT-BUILDER.md",
+        "akb/modules/MOD-CLASSIFIER.md",
+        "akb/data",
+        "src/ka9q_beacon_monitor/model",
+        "src/ka9q_beacon_monitor/repository",
+        "src/ka9q_beacon_monitor/ka9q",
+        "src/ka9q_beacon_monitor/processing",
+        "tests/model",
+        "tests/repository",
+        "tests/ka9q",
+        "tests/processing",
+        "reviews/M4/M4_1_REVIEW_REQUEST.md",
+        "reviews/M4/M4_2_REVIEW_REQUEST.md",
+        "reviews/M4/M4_3_REVIEW_REQUEST.md",
+        "README_M4_3.md",
+        "CHANGELOG_M4_3.md",
+        "pyproject.toml"
+      ],
+      "optional": [
+        "akb/architecture",
+        "reviews/M4/M4_1_REVIEW_RESPONSE*.md",
+        "reviews/M4/M4_2_REVIEW_RESPONSE*.md",
+        "reviews/M4/M4_3_REVIEW_RESPONSE*.md",
+        "TEST_RESULTS_M4_*.txt",
+        "SHA256SUMS_M4_*.txt"
+      ]
+    },
+    "M4.4": {
+      "id": "M4.4",
+      "description": "Selective Verification Analyzer with complete prior M4 and M3 dependencies",
+      "required": [
+        "akb/modules/MOD-STATUS-RECEIVER.md",
+        "akb/modules/MOD-MEASUREMENT-BUILDER.md",
+        "akb/modules/MOD-CLASSIFIER.md",
+        "akb/modules/MOD-VERIFICATION-ANALYZER.md",
+        "akb/data",
+        "src/ka9q_beacon_monitor/model",
+        "src/ka9q_beacon_monitor/repository",
+        "src/ka9q_beacon_monitor/ka9q",
+        "src/ka9q_beacon_monitor/processing",
+        "tests/model",
+        "tests/repository",
+        "tests/ka9q",
+        "tests/processing",
+        "reviews/M4/M4_1_REVIEW_REQUEST.md",
+        "reviews/M4/M4_2_REVIEW_REQUEST.md",
+        "reviews/M4/M4_3_REVIEW_REQUEST.md",
+        "reviews/M4/M4_4_REVIEW_REQUEST.md",
+        "README_M4_4.md",
+        "CHANGELOG_M4_4.md",
+        "pyproject.toml"
+      ],
+      "optional": [
+        "akb/architecture",
+        "reviews/M4/*REVIEW_RESPONSE*.md",
+        "TEST_RESULTS_M4_*.txt",
+        "SHA256SUMS_M4_*.txt"
+      ]
+    },
+    "M4.6": {
+      "output_name": "M4_6_AI_Review_Package.zip",
+      "required": [
+        "akb/modules/MOD-INTERVAL-AGGREGATOR.md",
+        "akb/data",
+        "src/ka9q_beacon_monitor/model",
+        "src/ka9q_beacon_monitor/processing",
+        "tests/model",
+        "tests/processing",
+        "reviews/M4/M4_6_REVIEW_REQUEST.md",
+        "README_M4_6.md",
+        "CHANGELOG_M4_6.md",
+        "pyproject.toml"
+      ],
+      "optional": [
+        "akb/architecture",
+        "src/ka9q_beacon_monitor/repository",
+        "tests/repository",
+        "reviews/M4/*REVIEW_RESPONSE*.md"
+      ]
+    },
+    "M4.7": {
+      "id": "M4.7",
+      "description": "Read-only REST API with OpenAPI, approved repository and complete domain dependencies",
+      "output_name": "M4_7_AI_Review_Package.zip",
+      "required": [
+        "akb/modules/MOD-REST-API.md",
+        "akb/modules/MOD-REPOSITORY.md",
+        "akb/data",
+        "src/ka9q_beacon_monitor/api",
+        "src/ka9q_beacon_monitor/model",
+        "src/ka9q_beacon_monitor/repository",
+        "tests/api",
+        "tests/model",
+        "tests/repository",
+        "reviews/M4/M4_7_REVIEW_REQUEST.md",
+        "README_M4_7.md",
+        "CHANGELOG_M4_7.md",
+        "pyproject.toml"
+      ],
+      "optional": [
+        "akb/architecture",
+        "src/ka9q_beacon_monitor/processing",
+        "tests/processing",
+        "reviews/M4/*REVIEW_RESPONSE*.md",
+        "reviews/M4/M4_7_FINDING_DISPOSITION.md"
+      ]
+    },
+    "M4.8": {
+      "id": "M4.8",
+      "description": "Read-only Web UI consuming the approved M4.7 REST API, with hardened embedded configuration JSON",
+      "output_name": "M4_8_AI_Review_Package.zip",
+      "required": [
+        "akb/modules/MOD-WEB-UI.md",
+        "akb/modules/MOD-REST-API.md",
+        "src/ka9q_beacon_monitor/web",
+        "src/ka9q_beacon_monitor/api",
+        "tests/web",
+        "tests/api",
+        "reviews/M4/M4_8_REVIEW_REQUEST.md",
+        "README_M4_8.md",
+        "CHANGELOG_M4_8.md",
+        "pyproject.toml",
+        "reviews/M4/M4_8_FINDING_DISPOSITION.md"
+      ],
+      "optional": [
+        "akb/data",
+        "akb/architecture",
+        "src/ka9q_beacon_monitor/model",
+        "src/ka9q_beacon_monitor/repository",
+        "tests/model",
+        "tests/repository",
+        "reviews/M4/*REVIEW_RESPONSE*.md"
+      ]
+    },
+    "M4.9": {
+      "id": "M4.9",
+      "description": "Main Application composition root with complete approved M4 pipeline and shared ASGI lifecycle",
+      "output_name": "M4_9_AI_Review_Package.zip",
+      "required": [
+        "akb/modules/MOD-MAIN-APPLICATION.md",
+        "akb/modules",
+        "akb/data",
+        "src/ka9q_beacon_monitor/runtime",
+        "src/ka9q_beacon_monitor/main.py",
+        "src/ka9q_beacon_monitor/api",
+        "src/ka9q_beacon_monitor/web",
+        "src/ka9q_beacon_monitor/processing",
+        "src/ka9q_beacon_monitor/ka9q",
+        "src/ka9q_beacon_monitor/model",
+        "src/ka9q_beacon_monitor/repository",
+        "tests/runtime",
+        "tests/test_main.py",
+        "tests/api",
+        "tests/web",
+        "tests/processing",
+        "tests/ka9q",
+        "tests/model",
+        "tests/repository",
+        "reviews/M4/M4_9_REVIEW_REQUEST.md",
+        "README_M4_9.md",
+        "CHANGELOG_M4_9.md",
+        "pyproject.toml"
+      ],
+      "optional": [
+        "akb/architecture",
+        "akb/context",
+        "reviews/M4/*REVIEW_RESPONSE*.md",
+        "reviews/M4/*FINDING_DISPOSITION*.md"
+      ]
+    }
+  }
+}
