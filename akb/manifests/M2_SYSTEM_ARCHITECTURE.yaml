@@ -1,0 +1,91 @@
+akb:
+  id: KA9Q-BEACON-MONITOR-AKB
+  version: 1.0.2
+  milestone: M2.1.1-PACKAGE-RELEASE
+  status: DRAFT_FOR_RE_REVIEW
+  language: en
+  normative_schema: AKB-SCHEMA-1-0
+requires_baseline:
+- AKB-FOUNDATION-M1-2-1
+documents:
+- id: CTX-SYSTEM
+  path: context/CTX-SYSTEM.md
+  status: DRAFT_FOR_RE_REVIEW
+- id: CTX-GLOSSARY
+  path: context/CTX-GLOSSARY.md
+  status: DRAFT_FOR_RE_REVIEW
+- id: ARCH-PRINCIPLES
+  path: architecture/ARCH-PRINCIPLES.md
+  status: DRAFT_FOR_RE_REVIEW
+- id: ARCH-KA9Q
+  path: architecture/ARCH-KA9Q.md
+  status: DRAFT_FOR_RE_REVIEW
+  version: 1.0.2
+- id: ARCH-RUNTIME
+  path: architecture/ARCH-RUNTIME.md
+  status: DRAFT_FOR_RE_REVIEW
+  version: 1.0.2
+- id: ARCH-EVENTS
+  path: architecture/ARCH-EVENTS.md
+  status: DRAFT_FOR_RE_REVIEW
+planned_artifacts:
+- id: TEST-M2-DEPENDENCY-GRAPH
+  status: PLANNED
+  owner: Architecture
+- id: TEST-M2-BOUNDARY-CONSISTENCY
+  status: PLANNED
+  owner: Architecture
+- id: TEST-M2-EVENT-CATALOG
+  status: PLANNED
+  owner: Architecture
+- id: TEST-M2-KA9Q-ASSUMPTIONS
+  status: PLANNED
+  owner: Architecture
+- id: TEST-M2-PACKAGE-ENTRY-POINT
+  status: PLANNED
+  owner: Architecture
+review_gates:
+  required_documents:
+  - CTX-SYSTEM
+  - CTX-GLOSSARY
+  - ARCH-PRINCIPLES
+  - ARCH-KA9Q
+  - ARCH-RUNTIME
+  - ARCH-EVENTS
+  acceptance:
+    critical_findings: 0
+    high_findings: 0
+    unresolved_cross_reference_errors: 0
+    undefined_normative_terms: 0
+    foundation_baseline_included: PASS
+    document_structure: PASS
+    event_catalog_consistency: PASS
+    package_entry_point_exists: PASS
+    readme_entry_point_consistency: PASS
+review_packages:
+  full_review_package:
+    purpose: Independent external milestone review
+    includes:
+    - baseline/AKB-FOUNDATION-M1-2-1/MANIFEST.yaml
+    - baseline/AKB-FOUNDATION-M1-2-1/foundation/*.md
+    - MANIFEST.yaml
+    - context/*.md
+    - architecture/*.md
+    - reviews/M2_AI_REVIEW_PROMPT.md
+    required_for:
+    - external-ai-review
+    - baseline-approval
+  delta_review_package:
+    purpose: Internal iteration when reviewer already possesses the exact required
+      baseline
+    includes:
+    - MANIFEST.yaml
+    - context/*.md
+    - architecture/*.md
+    - CHANGELOG.md
+    requires_explicit_baseline_acknowledgement: true
+package:
+  id: AKB-M2-1-1-PACKAGE
+  entry_point: MANIFEST.yaml
+  root: M2.1_System_Architecture
+  foundation_baseline: AKB-FOUNDATION-M1-2-1
