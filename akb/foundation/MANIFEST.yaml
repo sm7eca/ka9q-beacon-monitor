@@ -1,0 +1,159 @@
+akb:
+  id: AKB-KA9Q-BEACON-MONITOR
+  name: KA9Q VHF Beacon Monitor Architecture Knowledge Base
+  version: 1.0.3
+  milestone: M1.2.1
+  baseline_status: DRAFT_FOR_RE_REVIEW
+  language: en
+  normative_language: RFC2119
+  created: 2026-08-06
+  owner: Architecture Board
+  source_of_truth: true
+schema:
+  id: AKB-SCHEMA-1-0
+  document_id: AKB-SCHEMA
+  path: foundation/AKB-SCHEMA.md
+  document_types:
+  - knowledge
+  - contract
+  - entity
+  - decision
+  - requirement
+  - test
+  required_sections:
+  - Purpose
+  - Scope
+  - Responsibilities
+  - Definitions
+  - Normative Requirements
+  - Interfaces
+  - Constraints
+  - Failure Modes
+  - Traceability
+  - Review Questions
+  - Change History
+documents:
+- id: AKB-META
+  path: foundation/AKB-META.md
+  type: knowledge
+  normative: true
+  status: DRAFT_FOR_RE_REVIEW
+- id: AKB-SCHEMA
+  path: foundation/AKB-SCHEMA.md
+  type: contract
+  normative: true
+  status: DRAFT_FOR_RE_REVIEW
+- id: AKB-README
+  path: foundation/AKB-README.md
+  type: knowledge
+  normative: true
+  status: DRAFT_FOR_RE_REVIEW
+- id: AKB-STATUS
+  path: foundation/AKB-STATUS.md
+  type: contract
+  normative: true
+  status: DRAFT_FOR_RE_REVIEW
+- id: AKB-REVIEW
+  path: foundation/AKB-REVIEW.md
+  type: contract
+  normative: true
+  status: DRAFT_FOR_RE_REVIEW
+- id: AKB-TRACE
+  path: foundation/AKB-TRACE.md
+  type: contract
+  normative: true
+  status: DRAFT_FOR_RE_REVIEW
+planned_documents:
+- CTX-SYSTEM
+- CTX-GLOSSARY
+- ARCH-PRINCIPLES
+- ARCH-KA9Q
+- ARCH-RUNTIME
+- ARCH-EVENTS
+- DM-STATUS-SAMPLE
+- DM-MEASUREMENT-WINDOW
+- DM-OBSERVATION
+- DM-INTERVAL-SUMMARY
+- DM-DATABASE
+- MOD-STATUS-RECEIVER
+- MOD-EVENT-BUS
+- MOD-STATUS-CACHE
+- MOD-MEASUREMENT-WINDOW
+- MOD-OBSERVATION-BUILDER
+- MOD-CLASSIFIER
+- MOD-VERIFICATION-SCHEDULER
+- MOD-TONE-VERIFIER
+- MOD-CW-VERIFIER
+- MOD-MORSE-VERIFIER
+- MOD-REPOSITORY
+- MOD-AGGREGATOR
+- OPS-HEALTH
+- OPS-RETENTION
+- OPS-LOGGING
+- OPS-DEPLOYMENT
+- OPS-ERROR-HANDLING
+- API-REST
+- API-WEB
+- IF-KA9Q-STATUS
+- IF-KA9Q-RTP
+- REQ-FR
+- REQ-NFR
+- TEST-UNIT
+- TEST-INTEGRATION
+- TEST-HIL
+- TEST-ACCEPTANCE
+- ADR-001
+- ADR-002
+- ADR-003
+planned_artifacts:
+- id: TEST-AKB-SCHEMA
+  type: test
+  owner: AKB-SCHEMA
+  status: PLANNED
+- id: TEST-AKB-XREF
+  type: test
+  owner: AKB-TRACE
+  status: PLANNED
+- id: TEST-AKB-PACKAGE-COMPLETE
+  type: test
+  owner: AKB-TRACE
+  status: PLANNED
+- id: TEST-AKB-DEPENDENCY-GRAPH
+  type: test
+  owner: AKB-TRACE
+  status: PLANNED
+- id: TEST-REVIEW-SCHEMA
+  type: test
+  owner: AKB-REVIEW
+  status: PLANNED
+- id: TEST-REVIEW-DECISION-RULES
+  type: test
+  owner: AKB-STATUS
+  status: PLANNED
+- id: TEST-AKB-ASSUMPTION-REGISTER
+  type: test
+  owner: AKB-STATUS
+  status: PLANNED
+- id: TEST-AKB-ENTRY-ORDER
+  type: test
+  owner: AKB-SCHEMA
+  status: PLANNED
+external_references:
+- id: AI-011
+  type: prior-review-finding
+  status: CLOSED_BY_DESIGN
+review_gates:
+  foundation:
+    required_documents:
+    - AKB-META
+    - AKB-SCHEMA
+    - AKB-README
+    - AKB-STATUS
+    - AKB-REVIEW
+    - AKB-TRACE
+    acceptance:
+      critical_findings: 0
+      high_findings: 0
+      unresolved_cross_reference_errors: 0
+      validator_result: PASS
+      entry_point_dependency_consistency: PASS
