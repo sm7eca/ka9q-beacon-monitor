@@ -9,3 +9,15 @@ The milestone adds a concrete `ka9q_beacon_monitor.deployment_factory:create_app
 ## M5.7.1
 
 Re-review patch closing the deployment-template, AKB schema and top-level milestone traceability findings. No production code changed.
+
+## M5.7.2 Raspberry Pi systemd template hardening
+
+A real Pi5 no-SDR systemd start exposed stale unsupported `KA9Q_*` variables in the deployment environment template. The template is now constrained to the M5.1 configuration whitelist and protected by a regression test.
+
+## M5.7.3 root-cause patch
+
+Resolves the cross-module `KA9Q_*` environment namespace conflict between M5.1 configuration and M5.2 build identity.
+## M5.7.4 final registry verification
+
+The M5.7 review package now explicitly includes observability/core.py and a regression test proves BuildIdentity consumes the shared environment registry names.
+

@@ -490,7 +490,12 @@
         "pyproject.toml",
         "akb/milestones/MILESTONE-M5-PRODUCTION-READINESS.md",
         "tools/review_milestones.json",
-        "reviews/M5/M5_7_1_FINDING_DISPOSITION.md"
+        "reviews/M5/M5_7_1_FINDING_DISPOSITION.md",
+        "reviews/M5/M5_7_2_FINDING_DISPOSITION.md",
+        "src/ka9q_beacon_monitor/environment.py",
+        "reviews/M5/M5_7_3_FINDING_DISPOSITION.md",
+        "src/ka9q_beacon_monitor/observability/core.py",
+        "reviews/M5/M5_7_4_FINDING_DISPOSITION.md"
       ],
       "optional": [
         "akb/modules/MOD-MAIN-APPLICATION.md",

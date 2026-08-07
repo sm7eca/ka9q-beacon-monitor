@@ -60,7 +60,7 @@ This module covers structured JSON logging, process liveness, service readiness,
 
 # Interfaces
 
-Inputs: `BeaconRuntime.is_started`, existing `RuntimeCounters`, optional readiness callback, and named `KA9Q_BUILD_*` environment metadata.
+Inputs: `BeaconRuntime.is_started`, existing `RuntimeCounters`, optional readiness callback, and named `KA9Q_BUILD_*` environment metadata registered in the shared process-environment namespace.
 
 Outputs: `/ops/live`, `/ops/ready`, `/ops/build`, `/ops/diagnostics`, `/ops/metrics`, plus the structured logging formatter/configurator.
 
@@ -123,3 +123,4 @@ This contract implements `MILESTONE-M5-004` and preserves `MILESTONE-M5-001`. Ex
 | Version | Date | Change |
 |---|---|---|
 | 1.0.0 | 2026-08-07 | Initial M5.2 observability and diagnostics contract. |
+| 1.0.1 | 2026-08-07 | Declare shared registration of build-identity environment names with M5.1 namespace validation. |

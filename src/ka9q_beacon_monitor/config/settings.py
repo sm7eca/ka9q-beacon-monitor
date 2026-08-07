@@ -7,6 +7,8 @@ import os
 from pathlib import Path
 from typing import Mapping, Any
 
+from ka9q_beacon_monitor.environment import OBSERVABILITY_ENV_KEYS
+
 
 class ConfigError(ValueError):
     """Raised when runtime configuration is invalid before service startup."""
@@ -165,7 +167,7 @@ def load_runtime_configuration(
 
     env = os.environ if environ is None else environ
 
-    known_env_keys = set(_ENV_KEYS) | set(_SECRET_ENV_KEYS)
+    known_env_keys = set(_ENV_KEYS) | set(_SECRET_ENV_KEYS) | set(OBSERVABILITY_ENV_KEYS)
     unknown_ka9q_keys = sorted(
         name for name in env if name.startswith("KA9Q_") and name not in known_env_keys
     )

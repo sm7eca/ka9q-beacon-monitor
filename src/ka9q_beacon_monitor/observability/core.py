@@ -10,6 +10,12 @@ from typing import Callable, Mapping, Protocol
 
 from fastapi import APIRouter, HTTPException, Response
 
+from ka9q_beacon_monitor.environment import (
+    KA9Q_BUILD_REVISION_ENV,
+    KA9Q_BUILD_TIME_UTC_ENV,
+    KA9Q_BUILD_VERSION_ENV,
+)
+
 
 class RuntimeStatus(Protocol):
     @property
@@ -32,9 +38,9 @@ class BuildIdentity:
         except PackageNotFoundError:
             package_version = "0+unknown"
         return cls(
-            version=env.get("KA9Q_BUILD_VERSION", package_version),
-            revision=env.get("KA9Q_BUILD_REVISION", "unknown"),
-            build_time_utc=env.get("KA9Q_BUILD_TIME_UTC"),
+            version=env.get(KA9Q_BUILD_VERSION_ENV, package_version),
+            revision=env.get(KA9Q_BUILD_REVISION_ENV, "unknown"),
+            build_time_utc=env.get(KA9Q_BUILD_TIME_UTC_ENV),
         )
 
 

@@ -15,3 +15,23 @@
 - Added AKB `Purpose` and `depends_on`.
 - Added M5.7 to the top-level M5 delivery plan and ensured review configuration is included in the M5.7 review package.
 - No production code changed.
+
+## M5.7.2
+
+- Aligned `deploy/runtime.env.example` with the M5.1 `KA9Q_*` environment whitelist after a real Raspberry Pi 5 systemd startup exposed stale unsupported variables.
+- Added a regression test preventing unsupported environment keys from returning to the template.
+- Added field-discovered finding disposition.
+- No application production code changed.
+
+## M5.7.3
+
+- Added a shared registry for observability build-identity environment names.
+- M5.1 now accepts registered cross-module metadata while continuing to reject unknown `KA9Q_*` variables.
+- Restored supported build identity values to `runtime.env.example`.
+- Added regression tests and AKB traceability updates.
+## M5.7.4
+
+- Added executable proof that BuildIdentity consumes the shared environment registry aliases.
+- Added observability/core.py explicitly to the M5.7 review package.
+- Closed M5.7.3-F-001.
+

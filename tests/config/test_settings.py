@@ -125,3 +125,15 @@ def test_malformed_json_fails_closed(tmp_path):
     path.write_text("{not-json", encoding="utf-8")
     with pytest.raises(ConfigError, match="not valid JSON"):
         load_runtime_configuration(path, environ={})
+
+
+def test_registered_observability_environment_keys_are_accepted(tmp_path):
+    config = load_runtime_configuration(
+        write_config(tmp_path),
+        environ={
+            "KA9Q_BUILD_VERSION": "1.2.3",
+            "KA9Q_BUILD_REVISION": "abcdef0",
+            "KA9Q_BUILD_TIME_UTC": "2026-08-07T10:00:00Z",
+        },
+    )
+    assert config.app.database_path == tmp_path / "beacons.sqlite3"

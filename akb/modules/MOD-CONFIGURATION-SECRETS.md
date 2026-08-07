@@ -64,6 +64,7 @@ Outputs: immutable `RuntimeConfiguration` containing validated `AppConfig` plus 
 - Configuration loading SHALL perform no network, database, filesystem-write, or external-service startup actions.
 - Unknown configuration keys SHALL be rejected rather than silently ignored.
 - Environment variable names are part of the deployment interface and SHALL remain explicit.
+- Namespace validation SHALL recognize explicitly registered cross-module `KA9Q_*` metadata keys without treating them as runtime-configuration overrides.
 
 # Normative Requirements
 
@@ -78,6 +79,7 @@ Outputs: immutable `RuntimeConfiguration` containing validated `AppConfig` plus 
 - **MOD-CONFIGURATION-SECRETS-009:** Network ports SHALL be integers in the inclusive range 1..65535 and Web refresh SHALL remain in 5..3600 seconds.
 - **MOD-CONFIGURATION-SECRETS-010:** Configuration loading SHALL not open or mutate external runtime resources.
 - **MOD-CONFIGURATION-SECRETS-011:** The configuration model SHALL preserve approved M4 behavior and SHALL not redefine M4 domain policies.
+- **MOD-CONFIGURATION-SECRETS-012:** Unknown `KA9Q_*` environment names SHALL fail closed, except explicitly registered cross-module environment names owned by approved modules; recognized cross-module names SHALL not be consumed as M5.1 runtime overrides.
 
 # Failure Modes
 
@@ -92,7 +94,7 @@ Outputs: immutable `RuntimeConfiguration` containing validated `AppConfig` plus 
 
 # Traceability
 
-`MOD-CONFIGURATION-SECRETS-001` through `-011` implement `MILESTONE-M5-002` and `MILESTONE-M5-003`. Executable evidence is provided by `tests/config/test_settings.py` (`TEST-M5-CONFIGURATION-SECRETS`).
+`MOD-CONFIGURATION-SECRETS-001` through `-012` implement `MILESTONE-M5-002` and `MILESTONE-M5-003`. Executable evidence is provided by `tests/config/test_settings.py` (`TEST-M5-CONFIGURATION-SECRETS`).
 
 # Acceptance Criteria
 
@@ -115,3 +117,4 @@ Outputs: immutable `RuntimeConfiguration` containing validated `AppConfig` plus 
 | Version | Date | Change |
 |---|---|---|
 | 1.0.0 | 2026-08-07 | Initial M5.1 configuration and secrets contract. |
+| 1.0.1 | 2026-08-07 | Register approved cross-module KA9Q environment metadata while preserving fail-closed unknown-key handling. |
