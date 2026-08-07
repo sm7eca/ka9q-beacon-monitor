@@ -1,6 +1,6 @@
 ---
 id: MILESTONE-M5-PRODUCTION-READINESS
-version: 1.0.1
+version: 1.0.2
 status: DRAFT_FOR_REVIEW
 title: M5 Production Readiness and Field Validation
 owner: System Architecture
@@ -97,6 +97,7 @@ Outputs: deployable package, validated adapters, observability interfaces, opera
 | M5.4 KA9Q Production Adapters and Phase 0 | Real decoder/backend adapters and captured hardware/radiod evidence. |
 | M5.5 End-to-End and Failure Validation | Replay/live system tests, fault injection, recovery and performance evidence. |
 | M5.6 Operations and Release Candidate | Runbooks, backup/restore, release manifest, final review and handover. |
+| M5.7 Production Deployment Integration | Concrete production factory, strict deployment wiring, Pi/systemd integration and no-SDR smoke deployment discovered as necessary during first real deployment. |
 
 # Failure Modes
 

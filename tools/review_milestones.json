@@ -469,6 +469,43 @@
         "reviews/M5/*FINDING_DISPOSITION*.md",
         "reviews/M5/*REVIEW_RESPONSE*.md"
       ]
+    },
+    "M5.7": {
+      "id": "M5.7",
+      "description": "Production Deployment Integration: concrete ASGI factory, strict deployment wiring and Raspberry Pi no-SDR smoke mode",
+      "output_name": "M5_7_AI_Review_Package.zip",
+      "required": [
+        "akb/modules/MOD-PRODUCTION-DEPLOYMENT-INTEGRATION.md",
+        "src/ka9q_beacon_monitor/deployment_factory.py",
+        "src/ka9q_beacon_monitor/main.py",
+        "src/ka9q_beacon_monitor/runtime/application.py",
+        "src/ka9q_beacon_monitor/config",
+        "src/ka9q_beacon_monitor/ka9q",
+        "deploy",
+        "scripts/pi5_no_sdr_smoke.sh",
+        "tests/deployment_integration",
+        "reviews/M5/M5_7_REVIEW_REQUEST.md",
+        "README_M5_7.md",
+        "CHANGELOG_M5_7.md",
+        "pyproject.toml",
+        "akb/milestones/MILESTONE-M5-PRODUCTION-READINESS.md",
+        "tools/review_milestones.json",
+        "reviews/M5/M5_7_1_FINDING_DISPOSITION.md"
+      ],
+      "optional": [
+        "akb/modules/MOD-MAIN-APPLICATION.md",
+        "akb/modules/MOD-KA9Q-PRODUCTION-ADAPTERS.md",
+        "akb/modules/MOD-CONFIGURATION-SECRETS.md",
+        "src/ka9q_beacon_monitor/api",
+        "src/ka9q_beacon_monitor/web",
+        "src/ka9q_beacon_monitor/repository",
+        "tests/runtime",
+        "tests/config",
+        "tests/ka9q",
+        "phase0",
+        "reviews/M5/*FINDING_DISPOSITION*.md",
+        "reviews/M5/*REVIEW_RESPONSE*.md"
+      ]
     }
   }
 }
