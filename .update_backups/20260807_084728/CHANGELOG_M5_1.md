@@ -1,13 +1,5 @@
 # M5.1 Change Log
 
-## 1.0.1 — 2026-08-07
-
-- Reject unknown `KA9Q_*` environment variables instead of silently ignoring them.
-- Made `_SECRET_ENV_KEYS` the authoritative secret-loading mapping.
-- Added regression coverage for misspelled `KA9Q_*` variables.
-- Added finding disposition for M5.1-F-001 and M5.1-F-002.
-- Focused configuration suite: 14 passed.
-
 ## 1.0.0 — 2026-08-07
 
 - Added runtime configuration loader and immutable configuration model.

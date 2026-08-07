@@ -71,16 +71,6 @@ def test_unknown_file_key_is_rejected(tmp_path):
         load_runtime_configuration(path, environ={})
 
 
-
-
-def test_unknown_ka9q_environment_key_is_rejected(tmp_path):
-    with pytest.raises(ConfigError, match="unknown KA9Q environment variable"):
-        load_runtime_configuration(
-            write_config(tmp_path),
-            environ={"KA9Q_API_PROT": "9999"},
-        )
-
-
 def test_secret_like_keys_are_forbidden_in_config_file(tmp_path):
     path = write_config(tmp_path)
     payload = json.loads(path.read_text())

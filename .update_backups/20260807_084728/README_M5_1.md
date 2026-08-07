@@ -5,8 +5,8 @@ M5.1 adds a validated startup configuration boundary without changing approved M
 Key properties:
 - JSON for non-secret deployment configuration.
 - Explicit `KA9Q_*` environment overrides.
-- Secrets accepted only through the authoritative dedicated-secret environment mapping.
-- Strict unknown-key and secret-like-key rejection in both JSON and `KA9Q_*` environment input.
+- Secrets accepted only through dedicated environment variables.
+- Strict unknown-key and secret-like-key rejection.
 - Fail-closed validation before external resources start.
 - Redacted secret rendering.
 
@@ -21,5 +21,3 @@ Create review package:
 ```bash
 python3 tools/create_review_package.py M5.1
 ```
-
-M5.1.1 closes M5.1-F-001 and M5.1-F-002. Focused suite: 14 passed.

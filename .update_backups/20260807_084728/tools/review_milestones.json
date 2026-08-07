@@ -298,7 +298,7 @@
     },
     "M5.1": {
       "id": "M5.1",
-      "description": "Configuration and Secrets: validated startup configuration, strict JSON/KA9Q_* environment validation, authoritative secret mapping, and fail-closed startup",
+      "description": "Configuration and Secrets: validated startup configuration, environment overrides, secret boundary, and fail-closed validation",
       "output_name": "M5_1_AI_Review_Package.zip",
       "required": [
         "akb/milestones/MILESTONE-M5-PRODUCTION-READINESS.md",
@@ -315,8 +315,7 @@
         "src/ka9q_beacon_monitor/runtime",
         "tests/runtime",
         "reviews/M5/*REVIEW_RESPONSE*.md",
-        "reviews/M5/*FINDING_DISPOSITION*.md",
-        "reviews/M5/M5_1_FINDING_DISPOSITION.md"
+        "reviews/M5/*FINDING_DISPOSITION*.md"
       ]
     }
   }

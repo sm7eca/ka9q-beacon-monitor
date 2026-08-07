@@ -99,7 +99,7 @@ _ENV_KEYS = {
     "KA9Q_LOG_LEVEL": "log_level",
     "KA9Q_VERIFICATION_ENABLED": "verification_enabled",
 }
-_SECRET_ENV_KEYS = {"KA9Q_VERIFICATION_TOKEN": "verification_token"}
+_SECRET_ENV_KEYS = {"KA9Q_VERIFICATION_TOKEN"}
 _FORBIDDEN_SECRET_NAMES = {"verification_token", "secrets", "password", "token", "api_key"}
 
 
@@ -164,16 +164,6 @@ def load_runtime_configuration(
     """
 
     env = os.environ if environ is None else environ
-
-    known_env_keys = set(_ENV_KEYS) | set(_SECRET_ENV_KEYS)
-    unknown_ka9q_keys = sorted(
-        name for name in env if name.startswith("KA9Q_") and name not in known_env_keys
-    )
-    if unknown_ka9q_keys:
-        raise ConfigError(
-            "unknown KA9Q environment variable(s): " + ", ".join(unknown_ka9q_keys)
-        )
-
     values: dict[str, Any] = {}
     if config_path is not None:
         values.update(_read_config_file(Path(config_path)))
@@ -188,14 +178,11 @@ def load_runtime_configuration(
     coerced = {name: _coerce(name, value) for name, value in values.items()}
     app = AppConfig(**coerced)
 
-    secret_values: dict[str, SecretValue | None] = {}
-    for env_name, field_name in _SECRET_ENV_KEYS.items():
-        raw_value = env.get(env_name)
-        secret_values[field_name] = SecretValue(raw_value) if raw_value else None
-
-    if app.verification_enabled and secret_values["verification_token"] is None:
+    token_raw = env.get("KA9Q_VERIFICATION_TOKEN")
+    token = SecretValue(token_raw) if token_raw else None
+    if app.verification_enabled and token is None:
         raise ConfigError("KA9Q_VERIFICATION_TOKEN is required when verification is enabled")
 
     # Do not preserve or expose unrelated environment variables, secret or otherwise.
-    secrets = RuntimeSecrets(**secret_values)
+    secrets = RuntimeSecrets(verification_token=token)
     return RuntimeConfiguration(app=app, secrets=secrets)
