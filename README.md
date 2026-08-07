@@ -1,190 +1,102 @@
-# KA9Q VHF Beacon Monitor
+# KA9Q Beacon Monitor
 
-**Software: APPROVED · 212 tests passing · Phase 0 field validation: UNVERIFIED**
+KA9Q Beacon Monitor is a Linux service for continuous monitoring of selected VHF radio beacons using KA9Q-radio as the radio/channelization layer. The application provides persistence, JSON APIs, operational diagnostics and a browser-based beacon overview.
 
-A production-oriented monitoring system for detecting, classifying, verifying, storing and presenting VHF beacon observations using KA9Q-radio / radiod status and verification data.
+## Current status
 
-The project is developed using an Architecture Knowledge Base (AKB), contract-driven implementation and independent AI peer review at each milestone.
+**M5 Production Readiness is software-approved through M5.7.4.**
 
-## Project Status
+- M5.7 Production Deployment Integration: **APPROVED**
+- Full automated test suite: **223/223 passed**
+- Raspberry Pi 5 deployment verified on Debian GNU/Linux 13 (Trixie), ARM64
+- systemd service deployment verified
+- Web UI verified from another host on the LAN
+- `/ops/live`, `/ops/ready`, `/ops/diagnostics` and `/api/health` verified
+- Explicit **no-SDR** deployment mode verified on real Raspberry Pi 5 hardware
+- Build identity via `KA9Q_BUILD_*` verified in systemd operation
 
-**Software status: M5 COMPLETE / APPROVED**
+The no-SDR mode validates software and deployment only. It does not create synthetic radio observations or count as KA9Q/SDR field evidence.
 
-The complete software stack from KA9Q status reception through operations and release management has passed independent AI peer review. The current approved automated baseline is **212 tests passed**.
+## Phase 0 status
 
-### Field validation
+Phase 0 radio evidence remains **UNVERIFIED** for P0-A-001 through P0-A-003.
 
-Real KA9Q/radiod Phase-0 field evidence is still pending. The hardware-dependent assumptions `P0-A-001` through `P0-A-003` therefore remain **UNVERIFIED**.
+The next project step is hardware-backed validation with an SDR connected to KA9Q `radiod`. Phase 0 must verify the installed KA9Q version and actual radio/status behavior before the radio integration is considered field-validated.
 
-This is intentional: synthetic tests and software validation are not allowed to mark real hardware assumptions as verified. The system is **software-ready**, while **field-ready status remains blocked until a documented Phase-0 session has been completed**.
+## Raspberry Pi 5 deployment
 
-## System Pipeline
+Verified deployment locations:
 
 ```text
-KA9Q / radiod
-      |
-      v
-Status Receiver
-      |
-      v
-Measurement Builder
-      |
-      v
-Classifier
-      |
-      v
-Verification Analyzer
-      |
-      v
-Repository
-      |
-      +--------------------+
-      |                    |
-      v                    v
-Interval Aggregator      REST API
-                           |
-                           v
-                         Web UI
+/opt/ka9q-beacon-monitor          application repository
+/etc/ka9q-beacon-monitor          runtime/deployment configuration
+/var/lib/ka9q-beacon-monitor      persistent application data
 ```
 
-The Main Application composition root connects the independently reviewed modules and controls startup, shutdown and lifecycle management.
-
-## Approved Software Modules
-
-### M4 — Core Application
-
-| Milestone | Module | Status |
-|---|---|---|
-| M4.1 | Status Receiver | APPROVED |
-| M4.2 | Measurement Builder | APPROVED |
-| M4.3 | Classifier | APPROVED |
-| M4.4 | Verification Analyzer | APPROVED |
-| M4.5 | Repository | APPROVED |
-| M4.6 | Interval Aggregator | APPROVED |
-| M4.7 | REST API | APPROVED |
-| M4.8 | Web UI | APPROVED |
-| M4.9 | Main Application / Composition Root | APPROVED |
-
-### M5 — Production Readiness
-
-| Milestone | Module | Status |
-|---|---|---|
-| M5.1 | Configuration & Secrets | APPROVED |
-| M5.2 | Observability & Diagnostics | APPROVED |
-| M5.3 | Deployment Packaging | APPROVED |
-| M5.4 | KA9Q Production Adapters & Phase 0 Framework | SOFTWARE APPROVED |
-| M5.5 | End-to-End & Failure Validation | APPROVED |
-| M5.6 | Operations & Release Candidate | APPROVED |
-
-## Major Capabilities
-
-- KA9Q/radiod status ingestion
-- deterministic measurement-window construction
-- signal and beacon classification with hysteresis
-- independent beacon verification
-- SQLite persistence
-- interval aggregation
-- read-only REST API and Web UI
-- validated configuration and secret handling
-- liveness, readiness, diagnostics and metrics
-- deterministic deployment packaging
-- installation, upgrade and rollback support
-- KA9Q production adapter boundaries
-- end-to-end replay and failure validation
-- network/radiod interruption recovery validation
-- SQLite backup and restore
-- operational runbook
-- machine-readable release readiness decisions
-
-## Architecture and AKB
-
-Normative architecture and module contracts are stored under `akb/`. Each major module has an associated contract describing scope, responsibilities, interfaces, constraints, normative requirements, failure modes, traceability and review requirements.
-
-Implementation changes are reviewed against these contracts rather than only against unit tests.
-
-## Testing
-
-Run the complete automated test suite:
+Useful operational commands:
 
 ```bash
+systemctl status ka9q-beacon-monitor --no-pager
+sudo journalctl -u ka9q-beacon-monitor -n 100 --no-pager
+sudo systemctl restart ka9q-beacon-monitor
+```
+
+Health checks:
+
+```bash
+curl -s http://127.0.0.1:8000/ops/live
+curl -s http://127.0.0.1:8000/ops/ready
+curl -s http://127.0.0.1:8000/ops/diagnostics
+curl -s http://127.0.0.1:8000/api/health
+```
+
+Web UI:
+
+```text
+http://<pi-address>:8000/
+```
+
+In no-SDR mode, an empty beacon overview and zero radio-observation counters are expected.
+
+## Deployment configuration
+
+Repository-controlled Pi/no-SDR examples are provided under `deploy/`. Production configuration is installed under `/etc/ka9q-beacon-monitor`.
+
+M5.7 provides the concrete application factory and CLI-to-factory composition required for reproducible systemd startup. Environment-variable validation remains fail-closed for unknown `KA9Q_*` names, while legitimate observability build-identity variables use the common environment registry.
+
+## Web interface
+
+The current browser interface is a monitoring/status interface. Web-based dynamic beacon administration is **not implemented**.
+
+Investigation of dynamic beacon/frequency administration is deliberately deferred until KA9Q control behavior is verified against the installed `radiod` version during hardware-backed work.
+
+## KA9Q integration boundary
+
+KA9Q `radiod` is installed and configured separately from Beacon Monitor. The application consumes KA9Q-provided radio/status data rather than duplicating KA9Q's low-level DSP and channelization responsibilities.
+
+Exact KA9Q status/control fields and hardware behavior must be verified against the installed KA9Q version and real SDR data before those assumptions are promoted to verified field behavior.
+
+## Development and tests
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python3 -m pip install -e .
 python3 -m pytest -q
 ```
 
 Current approved baseline:
 
 ```text
-212 passed
+223 passed
 ```
 
-Focused milestone tests are stored under `tests/` and cover processing, persistence, concurrency, API, Web UI, configuration, observability, deployment, KA9Q adapters, end-to-end validation, and operations/release handling.
+## Review and evidence discipline
 
-## AI Peer Review
+Software review approval and hardware field evidence are tracked separately. A successful automated test, no-SDR smoke test or systemd deployment must not change a Phase 0 field assumption from `UNVERIFIED` without the required real KA9Q/SDR evidence.
 
-Generate a milestone review package with:
+Review milestone packaging and evidence tracking are maintained in `tools/review_milestones.json` and the repository review/AKB material.
 
-```bash
-python3 tools/create_review_package.py <milestone>
-```
+## Next step
 
-For example:
-
-```bash
-python3 tools/create_review_package.py M5.6
-```
-
-Review configuration is maintained in `tools/review_milestones.json`. Review requests, finding dispositions and milestone review material are stored under `reviews/`.
-
-A milestone is not treated as complete merely because its automated tests pass. Findings from independent review must also be resolved according to the AKB decision rules.
-
-## Configuration and Secrets
-
-Runtime configuration is validated before external resources are opened. Unknown `KA9Q_*` environment variables are rejected rather than silently ignored. Secrets are injected separately and are not intended to be stored in repository-controlled configuration files.
-
-## Operations
-
-Operational procedures are documented in `operations/RUNBOOK.md`, covering installation, startup, graceful shutdown, restart, health and diagnostics, upgrade, rollback, backup, restore, incident recovery and Phase-0 field validation.
-
-## Deployment
-
-M5.3 provides deterministic deployment packaging with reproducible release archives, manifests and checksums, archive integrity validation, immutable installed versions, controlled upgrade and rollback, and fail-closed rejection of malformed packages.
-
-## Release Readiness
-
-M5.6 deliberately separates two release decisions:
-
-```text
-software_release_ready
-field_release_ready
-```
-
-Software readiness depends on successful software reviews and release checks. Field readiness additionally requires verified Phase-0 hardware evidence. This prevents synthetic or CI-generated evidence from being mistaken for actual KA9Q/radiod field validation.
-
-## Remaining Work
-
-The software implementation through M5 is complete. The principal remaining project activity is **Phase 0 — Real KA9Q/radiod Field Validation**.
-
-A real field session must collect and document provenance including radiod version/revision, hardware identity, network endpoint, capture SHA-256, UTC capture interval, and relevant status and verification evidence.
-
-Only reviewed field evidence may change `P0-A-001` through `P0-A-003` from `UNVERIFIED`.
-
-**Software-ready: YES**  
-**Field-ready: NO**
-
-## Repository Structure
-
-```text
-akb/                  Architecture and normative contracts
-operations/           Operations runbook
-phase0/               Phase-0 evidence framework
-reviews/              AI peer-review material
-src/                  Application source code
-tests/                Automated tests
-tools/                Review and project tooling
-validation_evidence/  End-to-end software validation evidence
-```
-
-## Development Principle
-
-> Architecture defines the contract, tests verify the implementation, and independent review verifies that both agree.
-
-No hardware-dependent claim is considered verified solely because a synthetic test passes.
+Connect the SDR and execute Phase 0 against the installed KA9Q `radiod` environment. The immediate goal is reproducible evidence for P0-A-001, P0-A-002 and P0-A-003 while preserving the verified M5.7.4 deployment baseline.
