@@ -19,7 +19,6 @@ from fastapi import FastAPI
 
 from ka9q_beacon_monitor.api.server import BeaconDefinition, create_app as create_api_app
 from ka9q_beacon_monitor.model import MeasurementWindow, Observation, StatusSample
-from ka9q_beacon_monitor.observability import BuildIdentity, create_operations_router
 from ka9q_beacon_monitor.processing import (
     BeaconClassifier,
     ClassificationInput,
@@ -225,7 +224,6 @@ def create_main_app(
     *,
     beacons: Sequence[BeaconDefinition],
     web_config: WebUiConfig | None = None,
-    build_identity: BuildIdentity | None = None,
 ) -> FastAPI:
     """Create one ASGI app exposing API and dashboard with shared lifecycle."""
 
@@ -246,7 +244,6 @@ def create_main_app(
     api_app = create_api_app(runtime.repository, beacons=beacons)
     ui_config = web_config or WebUiConfig(api_base_url="/api")
     web_app = create_web_app(ui_config)
-    app.include_router(create_operations_router(runtime, build=build_identity))
     app.mount("/api", api_app)
     app.mount("/", web_app)
     return app

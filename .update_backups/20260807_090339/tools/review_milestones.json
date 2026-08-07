@@ -318,31 +318,6 @@
         "reviews/M5/*FINDING_DISPOSITION*.md",
         "reviews/M5/M5_1_FINDING_DISPOSITION.md"
       ]
-    },
-    "M5.2": {
-      "id": "M5.2",
-      "description": "Observability and Diagnostics: structured logs, liveness/readiness, runtime metrics, diagnostics and build identity",
-      "output_name": "M5_2_AI_Review_Package.zip",
-      "required": [
-        "akb/milestones/MILESTONE-M5-PRODUCTION-READINESS.md",
-        "akb/modules/MOD-OBSERVABILITY-DIAGNOSTICS.md",
-        "src/ka9q_beacon_monitor/observability",
-        "src/ka9q_beacon_monitor/runtime/application.py",
-        "tests/observability",
-        "tests/runtime",
-        "reviews/M5/M5_2_REVIEW_REQUEST.md",
-        "README_M5_2.md",
-        "CHANGELOG_M5_2.md",
-        "pyproject.toml"
-      ],
-      "optional": [
-        "akb/modules/MOD-MAIN-APPLICATION.md",
-        "akb/modules/MOD-CONFIGURATION-SECRETS.md",
-        "src/ka9q_beacon_monitor/api",
-        "src/ka9q_beacon_monitor/web",
-        "reviews/M5/*REVIEW_RESPONSE*.md",
-        "reviews/M5/*FINDING_DISPOSITION*.md"
-      ]
     }
   }
 }
