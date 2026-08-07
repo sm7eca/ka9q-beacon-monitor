@@ -275,6 +275,26 @@
         "reviews/M4/*REVIEW_RESPONSE*.md",
         "reviews/M4/*FINDING_DISPOSITION*.md"
       ]
+    },
+    "M5": {
+      "id": "M5",
+      "description": "Production Readiness and Field Validation milestone scope, release gates, and sub-milestone plan",
+      "output_name": "M5_Start_AI_Review_Package.zip",
+      "required": [
+        "akb/milestones/MILESTONE-M5-PRODUCTION-READINESS.md",
+        "reviews/M5/M5_START_REVIEW_REQUEST.md",
+        "README_M5.md",
+        "CHANGELOG_M5.md",
+        "tools/review_milestones.json"
+      ],
+      "optional": [
+        "akb/modules/MOD-MAIN-APPLICATION.md",
+        "akb/modules",
+        "akb/architecture",
+        "akb/context",
+        "reviews/M4/*REVIEW_RESPONSE*.md",
+        "reviews/M4/*FINDING_DISPOSITION*.md"
+      ]
     }
   }
 }
