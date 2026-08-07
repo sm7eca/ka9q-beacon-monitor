@@ -295,28 +295,6 @@
         "reviews/M4/*REVIEW_RESPONSE*.md",
         "reviews/M4/*FINDING_DISPOSITION*.md"
       ]
-    },
-    "M5.1": {
-      "id": "M5.1",
-      "description": "Configuration and Secrets: validated startup configuration, environment overrides, secret boundary, and fail-closed validation",
-      "output_name": "M5_1_AI_Review_Package.zip",
-      "required": [
-        "akb/milestones/MILESTONE-M5-PRODUCTION-READINESS.md",
-        "akb/modules/MOD-CONFIGURATION-SECRETS.md",
-        "src/ka9q_beacon_monitor/config",
-        "tests/config",
-        "reviews/M5/M5_1_REVIEW_REQUEST.md",
-        "README_M5_1.md",
-        "CHANGELOG_M5_1.md",
-        "pyproject.toml"
-      ],
-      "optional": [
-        "akb/modules/MOD-MAIN-APPLICATION.md",
-        "src/ka9q_beacon_monitor/runtime",
-        "tests/runtime",
-        "reviews/M5/*REVIEW_RESPONSE*.md",
-        "reviews/M5/*FINDING_DISPOSITION*.md"
-      ]
     }
   }
 }
