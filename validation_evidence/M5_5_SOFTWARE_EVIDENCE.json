@@ -1,0 +1,19 @@
+{
+  "milestone": "M5.5",
+  "evidence_type": "software-validation",
+  "status": "GENERATED_BY_EXECUTABLE_TESTS",
+  "phase0_field_evidence": "UNVERIFIED_UNCHANGED",
+  "required_scenarios": [
+    "deterministic replay through runtime",
+    "persistence and aggregation",
+    "REST API visibility",
+    "Web UI surface",
+    "production adapter boundary",
+    "network/radiod interruption recovery",
+    "malformed input isolation",
+    "storage failure and recovery",
+    "process restart persistence",
+    "partial dependency readiness outage"
+  ],
+  "note": "Numeric execution results are produced by tests and review; this repository artifact does not self-assert a pass result."
+}

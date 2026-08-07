@@ -7,6 +7,7 @@ from dataclasses import asdict, is_dataclass
 from datetime import datetime, timezone
 from enum import Enum
 from pathlib import Path
+from threading import RLock
 from typing import Any, Iterable, Iterator, Mapping
 
 SCHEMA_VERSION = 1
@@ -58,7 +59,8 @@ class SQLiteRepository:
     def __init__(self, database_path: str | Path) -> None:
         self.database_path = Path(database_path)
         self.database_path.parent.mkdir(parents=True, exist_ok=True)
-        self._connection = sqlite3.connect(self.database_path)
+        self._lock = RLock()
+        self._connection = sqlite3.connect(self.database_path, check_same_thread=False)
         self._connection.row_factory = sqlite3.Row
         self._connection.execute("PRAGMA foreign_keys = ON")
         self._connection.execute("PRAGMA journal_mode = WAL")
@@ -66,7 +68,8 @@ class SQLiteRepository:
         self.migrate()
 
     def close(self) -> None:
-        self._connection.close()
+        with self._lock:
+            self._connection.close()
 
     def __enter__(self) -> "SQLiteRepository":
         return self
@@ -76,14 +79,15 @@ class SQLiteRepository:
 
     @contextmanager
     def transaction(self) -> Iterator[sqlite3.Connection]:
-        try:
-            self._connection.execute("BEGIN IMMEDIATE")
-            yield self._connection
-        except Exception:
-            self._connection.rollback()
-            raise
-        else:
-            self._connection.commit()
+        with self._lock:
+            try:
+                self._connection.execute("BEGIN IMMEDIATE")
+                yield self._connection
+            except Exception:
+                self._connection.rollback()
+                raise
+            else:
+                self._connection.commit()
 
     def migrate(self) -> None:
         with self.transaction() as connection:
@@ -125,9 +129,10 @@ class SQLiteRepository:
 
     @property
     def schema_version(self) -> int:
-        row = self._connection.execute(
-            "SELECT value FROM schema_metadata WHERE key='schema_version'"
-        ).fetchone()
+        with self._lock:
+            row = self._connection.execute(
+                "SELECT value FROM schema_metadata WHERE key='schema_version'"
+            ).fetchone()
         if row is None:
             raise RepositoryError("schema version metadata is missing")
         return int(row["value"])
@@ -164,38 +169,42 @@ class SQLiteRepository:
 
     def get_observation(self, beacon_id: str, window_start_utc: datetime | str) -> dict[str, Any] | None:
         start = _json_default(window_start_utc) if isinstance(window_start_utc, datetime) else str(window_start_utc)
-        row = self._connection.execute(
-            "SELECT payload_json FROM observations WHERE beacon_id=? AND window_start_utc=?",
-            (beacon_id, start),
-        ).fetchone()
+        with self._lock:
+            row = self._connection.execute(
+                "SELECT payload_json FROM observations WHERE beacon_id=? AND window_start_utc=?",
+                (beacon_id, start),
+            ).fetchone()
         return None if row is None else json.loads(row["payload_json"])
 
     def list_observations(self, beacon_id: str, *, limit: int = 100) -> list[dict[str, Any]]:
         if limit <= 0:
             raise ValueError("limit must be positive")
-        rows = self._connection.execute(
-            "SELECT payload_json FROM observations WHERE beacon_id=? "
-            "ORDER BY window_start_utc DESC LIMIT ?",
-            (beacon_id, limit),
-        ).fetchall()
+        with self._lock:
+            rows = self._connection.execute(
+                "SELECT payload_json FROM observations WHERE beacon_id=? "
+                "ORDER BY window_start_utc DESC LIMIT ?",
+                (beacon_id, limit),
+            ).fetchall()
         return [json.loads(row["payload_json"]) for row in rows]
 
     def get_interval_summary(self, beacon_id: str, interval_start_utc: datetime | str) -> dict[str, Any] | None:
         start = _json_default(interval_start_utc) if isinstance(interval_start_utc, datetime) else str(interval_start_utc)
-        row = self._connection.execute(
-            "SELECT payload_json FROM interval_summaries WHERE beacon_id=? AND interval_start_utc=?",
-            (beacon_id, start),
-        ).fetchone()
+        with self._lock:
+            row = self._connection.execute(
+                "SELECT payload_json FROM interval_summaries WHERE beacon_id=? AND interval_start_utc=?",
+                (beacon_id, start),
+            ).fetchone()
         return None if row is None else json.loads(row["payload_json"])
 
     def list_interval_summaries(self, beacon_id: str, *, limit: int = 100) -> list[dict[str, Any]]:
         if limit <= 0:
             raise ValueError("limit must be positive")
-        rows = self._connection.execute(
-            "SELECT payload_json FROM interval_summaries WHERE beacon_id=? "
-            "ORDER BY interval_start_utc DESC LIMIT ?",
-            (beacon_id, limit),
-        ).fetchall()
+        with self._lock:
+            rows = self._connection.execute(
+                "SELECT payload_json FROM interval_summaries WHERE beacon_id=? "
+                "ORDER BY interval_start_utc DESC LIMIT ?",
+                (beacon_id, limit),
+            ).fetchall()
         return [json.loads(row["payload_json"]) for row in rows]
 
     def purge_before(self, cutoff_utc: datetime) -> tuple[int, int]:
@@ -210,6 +219,7 @@ class SQLiteRepository:
         return observations, summaries
 
     def counts(self) -> tuple[int, int]:
-        observations = self._connection.execute("SELECT COUNT(*) AS n FROM observations").fetchone()["n"]
-        summaries = self._connection.execute("SELECT COUNT(*) AS n FROM interval_summaries").fetchone()["n"]
+        with self._lock:
+            observations = self._connection.execute("SELECT COUNT(*) AS n FROM observations").fetchone()["n"]
+            summaries = self._connection.execute("SELECT COUNT(*) AS n FROM interval_summaries").fetchone()["n"]
         return int(observations), int(summaries)
