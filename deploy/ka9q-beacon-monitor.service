@@ -1,0 +1,22 @@
+[Unit]
+Description=KA9Q VHF Beacon Monitor
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=ka9q
+Group=ka9q
+WorkingDirectory=/opt/ka9q-beacon-monitor/current
+EnvironmentFile=/etc/ka9q-beacon-monitor/runtime.env
+ExecStart=/opt/ka9q-beacon-monitor/venv/bin/ka9q-beacon-monitor --config /etc/ka9q-beacon-monitor/runtime.json --factory ${KA9Q_ASGI_FACTORY} --host ${KA9Q_API_HOST} --port ${KA9Q_API_PORT}
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/ka9q-beacon-monitor
+
+[Install]
+WantedBy=multi-user.target

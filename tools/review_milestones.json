@@ -343,6 +343,35 @@
         "reviews/M5/*REVIEW_RESPONSE*.md",
         "reviews/M5/*FINDING_DISPOSITION*.md"
       ]
+    },
+    "M5.3": {
+      "id": "M5.3",
+      "description": "Deployment Packaging: deterministic release archive, integrity manifest, atomic install/upgrade/rollback and service definition",
+      "output_name": "M5_3_AI_Review_Package.zip",
+      "required": [
+        "akb/milestones/MILESTONE-M5-PRODUCTION-READINESS.md",
+        "akb/modules/MOD-DEPLOYMENT-PACKAGING.md",
+        "src/ka9q_beacon_monitor/deployment",
+        "deploy",
+        "tests/deployment",
+        "reviews/M5/M5_3_REVIEW_REQUEST.md",
+        "README_M5_3.md",
+        "CHANGELOG_M5_3.md",
+        "pyproject.toml"
+      ],
+      "optional": [
+        "akb/modules/MOD-CONFIGURATION-SECRETS.md",
+        "akb/modules/MOD-OBSERVABILITY-DIAGNOSTICS.md",
+        "src/ka9q_beacon_monitor/config",
+        "src/ka9q_beacon_monitor/observability",
+        "src/ka9q_beacon_monitor/runtime",
+        "tests/config",
+        "tests/observability",
+        "tests/runtime",
+        "reviews/M5/*REVIEW_RESPONSE*.md",
+        "reviews/M5/*FINDING_DISPOSITION*.md",
+        "reviews/M5/M5_3_FINDING_DISPOSITION.md"
+      ]
     }
   }
 }
