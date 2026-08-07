@@ -443,6 +443,32 @@
         "reviews/M5/*REVIEW_RESPONSE*.md",
         "reviews/M5/*FINDING_DISPOSITION*.md"
       ]
+    },
+    "M5.6": {
+      "id": "M5.6",
+      "description": "Operations and Release Candidate: runbooks, backup/restore, release manifest and final gates",
+      "output_name": "M5_6_AI_Review_Package.zip",
+      "required": [
+        "akb/milestones/MILESTONE-M5-PRODUCTION-READINESS.md",
+        "akb/modules/MOD-OPERATIONS-RELEASE-CANDIDATE.md",
+        "src/ka9q_beacon_monitor/operations",
+        "tests/operations",
+        "operations",
+        "phase0/PHASE0_EVIDENCE_TEMPLATE.json",
+        "reviews/M5/M5_6_REVIEW_REQUEST.md",
+        "reviews/M5/M5_6_FINDING_DISPOSITION.md",
+        "README_M5_6.md",
+        "CHANGELOG_M5_6.md",
+        "pyproject.toml"
+      ],
+      "optional": [
+        "src/ka9q_beacon_monitor/deployment",
+        "src/ka9q_beacon_monitor/config",
+        "src/ka9q_beacon_monitor/observability",
+        "validation_evidence",
+        "reviews/M5/*FINDING_DISPOSITION*.md",
+        "reviews/M5/*REVIEW_RESPONSE*.md"
+      ]
     }
   }
 }
