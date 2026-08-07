@@ -1,8 +1,0 @@
-src/ka9q_beacon_monitor/config/__init__.py
-src/ka9q_beacon_monitor/config/settings.py
-tests/config/test_settings.py
-akb/modules/MOD-CONFIGURATION-SECRETS.md
-reviews/M5/M5_1_REVIEW_REQUEST.md
-README_M5_1.md
-CHANGELOG_M5_1.md
-tools/review_milestones.json

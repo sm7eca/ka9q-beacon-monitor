@@ -1,2 +1,13 @@
 
 .update_backups/
+# macOS
+.DS_Store
+**/.DS_Store
+# Local update backups
+# Generated AI review packages
+review_packages/
+# Python cache
+__pycache__/
+*.py[cod]
+# Pytest cache
+.pytest_cache/
