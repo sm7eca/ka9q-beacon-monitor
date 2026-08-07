@@ -1,0 +1,26 @@
+{
+  "status": "UNVERIFIED",
+  "radiod_version": null,
+  "radiod_revision": null,
+  "capture_sha256": null,
+  "capture_start_utc": null,
+  "capture_end_utc": null,
+  "demod_modes": [],
+  "observed_status_fields": [],
+  "cadence": {
+    "sample_count": 0,
+    "median_ms": null,
+    "min_ms": null,
+    "max_ms": null
+  },
+  "keyed_cw_power": [],
+  "pcm_iq_acquisition": "UNVERIFIED",
+  "assumptions": {
+    "P0-A-001": "UNVERIFIED",
+    "P0-A-002": "UNVERIFIED",
+    "P0-A-003": "UNVERIFIED"
+  },
+  "hardware_id": null,
+  "network_endpoint": null,
+  "capture_integrity_verified": false
+}

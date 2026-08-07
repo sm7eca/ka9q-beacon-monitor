@@ -372,6 +372,39 @@
         "reviews/M5/*FINDING_DISPOSITION*.md",
         "reviews/M5/M5_3_FINDING_DISPOSITION.md"
       ]
+    },
+    "M5.4": {
+      "id": "M5.4",
+      "description": "KA9Q Production Adapters and Phase 0 (M5.4.1 provenance-integrity re-review)",
+      "output_name": "M5_4_AI_Review_Package.zip",
+      "required": [
+        "akb/milestones/MILESTONE-M5-PRODUCTION-READINESS.md",
+        "akb/modules/MOD-KA9Q-PRODUCTION-ADAPTERS.md",
+        "akb/architecture/ARCH-KA9Q.md",
+        "akb/foundation/AKB-STATUS.md",
+        "src/ka9q_beacon_monitor/ka9q",
+        "src/ka9q_beacon_monitor/processing/verification_analyzer.py",
+        "src/ka9q_beacon_monitor/model/status_sample.py",
+        "tests/ka9q",
+        "phase0",
+        "reviews/M5/M5_4_REVIEW_REQUEST.md",
+        "reviews/M5/M5_4_FINDING_DISPOSITION.md",
+        "README_M5_4.md",
+        "CHANGELOG_M5_4.md",
+        "pyproject.toml"
+      ],
+      "optional": [
+        "src/ka9q_beacon_monitor/runtime",
+        "src/ka9q_beacon_monitor/config",
+        "src/ka9q_beacon_monitor/observability",
+        "src/ka9q_beacon_monitor/deployment",
+        "tests/runtime",
+        "tests/config",
+        "tests/observability",
+        "tests/deployment",
+        "reviews/M5/*REVIEW_RESPONSE*.md",
+        "reviews/M5/*FINDING_DISPOSITION*.md"
+      ]
     }
   }
 }
